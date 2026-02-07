@@ -20,7 +20,6 @@
     
     @yield('style')
 </head>
-
 <body>
 
     @include('frontend.partials.header')
