@@ -9,31 +9,51 @@ use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
-    public function index(Request $request){
+    public function index($catId=null,$subCatId=null,$searchText=null){
 
-
+        if (!$catId) {
+        $catId = request('category_id');
+    }
+    
+    // If $subCatId is empty, try looking for 'sub_category_id'
+    if (!$subCatId) {
+        $subCatId = request('sub_category_id');
+    }
+    
+    // If $searchText is empty, try looking for 'search'
+    if (!$searchText) {
+        $searchText = request('search');
+    }
         $categories=Category::all();
         $subCategories=SubCategory::all();
 
-        $query=Products::with(['category','subCategory']);
+        $productQuery=Products::with(['category','subCategory']);
 
-        if ($request->category_id) {
-            $query=$query->where('category_id',$request->category_id);
+        if ($catId) {
+            $productQuery->whereHas('category', function($query) use ($catId) {
+                $query->where('id', $catId);
+            });
         }
-        if ($request->sub_category_id) {
-            $query=$query->where('sub_category_id',$request->sub_category_id);
+        if ($subCatId) {
+            $productQuery->whereHas('subCategory', function($query) use ($subCatId) {
+                $query->where('id', $subCatId);
+            });
         }
-        if ($request->search) {
-           $query=$query->where('name','like','%'.$request->search.'%') 
-           ->orWhere('color','like','%'.$request->search.'%');
+        if ($searchText) {
+           $productQuery->where(function ($query) use ($searchText) {   
+                $query->where('name','like','%'.$searchText.'%') 
+                ->orWhere('price','like','%'.$searchText.'%')
+                ->orWhere('size','like','%'.$searchText.'%')
+                ->orWhere('color','like','%'.$searchText.'%');
+               
+            });
         }
-        
-        $products=$query->get();
-        
+            
+            $products=$productQuery->get();
         return view('frontend.frontendIndex',[
             'products'=>$products,
             'subCategories'=>$subCategories, 
             'categories'=>$categories, 
             ]);
-}
+    }
 }

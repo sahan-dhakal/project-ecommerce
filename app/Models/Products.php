@@ -20,6 +20,10 @@ class Products extends Model
         'description',
         'thumbnail',
     ];
+//mutator example
+    public function setNameAttribute(){
+        return 'newly-added-product'.$this->name;
+    }
     /////has many child relation , belongsto parent
    public function category(){
     
@@ -30,4 +34,25 @@ class Products extends Model
     
     return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id'); 
 }
+
+protected $appends = ['HasCategory','HasSubCategory'];
+
+//accessor example
+public function getHasCategoryAttribute(){
+    if($this->category){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+public function getHasSubCategoryAttribute(){
+    if($this->subCategory){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 }

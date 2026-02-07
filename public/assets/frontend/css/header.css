@@ -39,32 +39,66 @@
     letter-spacing: -1px;
 }
 
-/* Search Bar */
+/* Search Bar starts */
 .search-bar {
     position: relative;
-    max-width: 500px;
+    max-width: 700px; /* Increased width to fit filters */
     margin: 0 auto;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 12px 50px 12px 20px;
+    /* Flexbox makes them sit in a line */
+    display: flex;
+    align-items: center;
+    background: #fff;
+    /* Moving the border from input to the main container */
     border: 2px solid #E7E8E2;
     border-radius: 50px;
-    font-size: 14px;
-    transition: border 0.3s;
+    padding: 5px; 
+    transition: border-color 0.3s;
 }
-
-.search-bar input:focus {
-    outline: none;
+.search-bar:focus-within,
+.search-bar:hover {
     border-color: #000;
 }
 
+.search-bar select {
+    border: none;
+    background: transparent;
+    height: 100%;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    /* Remove default ugly browser arrow if you want, or keep it */
+}
+
+.search-bar input {
+    border: none; /* Remove border because container has it now */
+    background: transparent;
+    padding: 10px 15px;
+    font-size: 14px;
+    flex-grow: 1; /* Takes all remaining space */
+    width: auto; /* Let flex handle width */
+}
+/* Vertical Divider Lines */
+.search-divider {
+    width: 1px;
+    height: 25px;
+    background: #E7E8E2;
+    margin: 0 5px;
+}
+/* Focus state is now handled by the container, so remove outline here */
+.search-bar input:focus {
+    outline: none; 
+    box-shadow: none;
+}
+
 .search-bar button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+    /* Changed from absolute to relative so it stays in flow */
+    position: relative; 
+    transform: none;
+    right: auto;
+    top: auto;
+    
     background: #000;
     color: #E7E8E2;
     border: none;
@@ -72,12 +106,87 @@
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
+    flex-shrink: 0; /* Prevents button from getting squashed */
     transition: background 0.3s;
 }
 
 .search-bar button:hover {
     background: #333;
 }
+
+/* ========== LIVE SEARCH RESULTS (New) ========== */
+
+/* The Wrapper to hold everything together */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* The Dropdown Box (Hidden by default) */
+.search-results-box {
+    position: absolute;
+    top: 100%; /* Pushes it directly below the search bar */
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 999;
+    max-height: 300px;
+    overflow-y: auto; /* Allows scrolling if many results */
+    display: none;    /* JS will toggle this to 'block' */
+    margin-top: 10px;
+}
+
+/* The List */
+.search-results-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Individual Result Item */
+.search-result-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: #f9f9f9;
+}
+
+/* Product Thumbnail in Result */
+.search-result-thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+/* Text Container */
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Product Name */
+.search-result-name {
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+}
+
+/* search bar ends here */
+
 
 /* Header Icons */
 .header-icons {
