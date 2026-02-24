@@ -5,6 +5,7 @@ use App\Constants\FileHandle;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SubCategoryController extends Controller
 {
@@ -21,6 +22,18 @@ public function index ($sub_category_id=null){
 public function addUpdateSubCategory (Request $req){
 
      try {
+
+                $req->validate([
+                    'category_id'=>'required|numeric',
+                    'name'=>
+                    ['required',
+                    'string',
+                    'max:255',
+                    Rule::unique('sub_categories','name')->ignore($req->id),],
+                    'id'=>'required',
+                    'thumbnail'=> 'required|image|mimes:jpg,png,jpeg,gif,svg|max:400',
+                ]);
+
             $thumbnail=FileHandle::addUpdateFile(
                 [
                     'requestParameter'=>'thumbnail',
@@ -57,7 +70,7 @@ try {
                 
             return redirect()->back()->with(['success'=>true,'message'=>'Successfully Deleted']);
         } catch (\Throwable $th) {
-           return redirect()->back()->with(['success'=>false,'message'=>$th->getMessage()]);
+           return redirect()->back()->with(['success'=>false,'message'=>$th->getMessage()])->withInput();
         }
 }
 public function getSubCategoryByCategory ($category_id){

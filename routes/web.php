@@ -19,9 +19,10 @@ Route::get('login-page', function () {
 })->name('login');
 
 Route::post('submit-login-form', [UserController::class,'loginUser'])->name('loginUser');
+Route::get('logout-user', [UserController::class,'logoutUser'])->name('logoutUser');
 
 
-Route::prefix('admin')->middleware(Access::class)->group(function(){
+Route::prefix('admin')->middleware('auth')->group(function(){
 
     include('adminRoutes.php');
 

@@ -48,6 +48,7 @@
         <div class="navbar-header">
             <div class="d-flex">
                 <!-- LOGO -->
+                <button onclick="window.location.href='{{ route('logoutUser') }}'" class="btn btn-danger">Logout</button>
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
@@ -136,13 +137,16 @@
                                 </li>
                                 </li>
                                  <li class="nav-item">
-                                  <a href="#" class="nav-link" data-key="t-basic-action"> Orders </a>
+                                  <a href="{{route('admin.orders')}}" class="nav-link" data-key="t-basic-action"> Orders </a>
                                 </li>
                                  <li class="nav-item">
                                   <a href="#" class="nav-link" data-key="t-basic-action"> Sell </a>
                                 </li>
                                  <li class="nav-item">
                                   <a href="#" class="nav-link" data-key="t-basic-action"> Stock </a>
+                                </li>
+                                 <li class="nav-item">
+                                  <a href="{{route('admin.suppliers')}}" class="nav-link" data-key="t-basic-action"> Suppliers </a>
                                 </li>
                                 
                             </li> <!-- end Dashboard Menu -->

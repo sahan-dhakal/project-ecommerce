@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\OrderController;
  //Category
     Route::get('/dashboard',[CategoryController::class,'index'])->name('admin.dashboard');
     Route::get('/category/{category_id?}',[CategoryController::class,'index'])->name('category.index');
@@ -25,3 +26,14 @@ use App\Http\Controllers\ProductController;
     Route::get('get-products-by-category/{category_id}', [ProductController::class,'getProductsByCategory'])->name('product.getProductsByCategory');
     Route::get('get-products-by-sub-category/{sub_category_id}', [ProductController::class,'getProductsBySubCategory'])->name('product.getProductsBySubCategory');
     
+    //supplier
+   Route::get('/suppliers', [SupplierController::class, 'index'])->name('admin.suppliers');
+   Route::post('/suppliers/store', [SupplierController::class, 'store'])->name('admin.suppliers.store');
+   Route::get('/suppliers/edit/{id}', [SupplierController::class, 'edit'])->name('admin.suppliers.edit');
+   Route::post('/suppliers/update/{id}', [SupplierController::class, 'update'])->name('admin.suppliers.update');
+   Route::get('/suppliers/delete/{id}', [SupplierController::class, 'destroy'])->name('admin.suppliers.delete');
+
+   //orders
+   Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
+   Route::get('/orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
+   

@@ -27,12 +27,15 @@
                 </option> 
               @endforeach
             </select>
+
+            
           </div>
           
           <div class="form-group mb-3">             
             <label for="name">Sub-Category Name</label>
             <input type="text" 
-                   value="{{isset($category)?$category->name:''}}" 
+                   value="{{old('name', isset($category)?$category->name:'')}}" 
+                   
                    class="form-control" 
                    name="name" 
                    {{isset($category)? '':'required'}}/>
@@ -45,6 +48,13 @@
                    name="thumbnail" 
                    {{isset($category)? '':'required'}} 
                    accept="image/*"/>
+                   <label for="error">
+              @error('thumbnail')
+              ({{$message}})
+              
+                
+            </label>
+            @enderror
           </div>
           
         </div>

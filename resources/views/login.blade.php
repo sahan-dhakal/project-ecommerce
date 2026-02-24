@@ -48,10 +48,10 @@
     </style>
 </head>
 <body>
-    <form action="{{ route('loginUser') }}" class="loginForm">
+    <form action="{{ route('loginUser') }}" class="loginForm" method="POST">
         @csrf
-        <input type="text" name="email" placeholder="Username/Email">
-        <input type="password" name="password" placeholder="Password">
+        <input type="text" name="email" placeholder="admin@admin.com" >
+        <input type="password" name="password" placeholder="Admin@12345">
         <input type="submit" value="Login">
     </form>
 </body>
